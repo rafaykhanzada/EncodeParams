@@ -26,7 +26,7 @@ namespace EncodeParams.Controllers
         public async Task<IActionResult> Index()
         {
             var data = await _context.User.ToListAsync();
-            data.ForEach(x => x.Id = EncodeHelper.Encrypt(x.Id));
+            //data.ForEach(x => x.Id = EncodeHelper.Encrypt(x.Id));
             return View(data);
         }
 

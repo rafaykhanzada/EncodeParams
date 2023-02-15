@@ -5,19 +5,7 @@
 }
 
 <h1>Index</h1>
-<script>
-    const SECRATE_KEY = 'TECHDawlance2022'
-    const IV = 'Fin@Dawlance2022'
-    const encryptPass = (pas) => {
-        let key = CryptoJS.enc.Utf8.parse(SECRATE_KEY);
-        let iv = CryptoJS.enc.Utf8.parse(IV)
-        let encrypted = CryptoJS.AES.encrypt(pas, key, {
-            iv: iv,
-            mode: CryptoJS.mode.CBC
-        });
-        return encrypted.toString();
-    }
-</script>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -42,7 +30,6 @@
     <tbody>
         @foreach (var item in Model)
         {
-            var Id = "";
 
             <tr>
                 
@@ -60,11 +47,22 @@
                     </td>
                 <td>
 
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="encode">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="encode"> Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="encode">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<script>
+    $(document).ready(function () {
+        var anchors = document.querySelectorAll('.encode');
+        Array.prototype.forEach.call(anchors, function (element, index) {
+            const value = element.href.substring(0, element.href.lastIndexOf("/"));
+            element.href = value + '?id=' + encryptPass(element.href.split("/").pop())
+            console.log(element.href)
+
+        });
+    })
+</script>
